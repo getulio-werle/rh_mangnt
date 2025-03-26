@@ -22,9 +22,17 @@
 
 <body>
 
-    <x-user-bar/>
+    <x-user-bar />
 
-    {{ $slot }}
+    <div class="d-flex pt-3">
+
+        <x-side-bar/>
+        
+        <div class="px-3">
+            {{ $slot }}
+        </div>
+
+    </div>
 
     <!-- resources -->
     <script src="{{ asset('assets/bootstrap/bootstrap.bundle.min.js') }}"></script>

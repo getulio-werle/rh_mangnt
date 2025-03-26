@@ -1,3 +1,5 @@
 <x-layout-app page-title="Home">
-    <p>home</p>
+    
+    <h1>Home page</h1>
+
 </x-layout-app>
