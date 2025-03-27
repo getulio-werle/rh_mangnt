@@ -22,16 +22,20 @@
 
 <body>
 
-    <x-user-bar />
-
-    <div class="d-flex pt-3">
-
-        <x-side-bar/>
-        
-        <div class="px-3">
-            {{ $slot }}
+    <div class="container-fluid">
+        <div class="row mb-5">
+            <div class="col-12">
+                <x-user-bar />      
+            </div>
         </div>
-
+        <div class="row">
+            <div class="col-2">
+                <x-side-bar/>
+            </div>
+            <div class="col-10 p-5">
+                {{ $slot }}    
+            </div>
+        </div>
     </div>
 
     <!-- resources -->
