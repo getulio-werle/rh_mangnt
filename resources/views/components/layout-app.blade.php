@@ -24,15 +24,15 @@
 
     <div class="container-fluid">
         <div class="row mb-5">
-            <div class="col-12">
+            <div class="col">
                 <x-user-bar />      
             </div>
         </div>
         <div class="row">
-            <div class="col-2">
+            <div class="col-6 col-md-4 col-lg-2">
                 <x-side-bar/>
             </div>
-            <div class="col-10 p-5">
+            <div class="col-6 col-md-8 col-lg-10 p-5">
                 {{ $slot }}    
             </div>
         </div>

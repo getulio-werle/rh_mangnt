@@ -2,7 +2,7 @@
 
     @csrf
 
-    <h3>Change user data</h3>
+    <h2>Change user data</h2>
 
     <div class="mb-3">
         <label for="name" class="form-label">Name</label>
