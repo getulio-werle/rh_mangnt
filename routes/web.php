@@ -3,7 +3,6 @@
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RhUserController;
-use App\Models\Department;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
@@ -26,4 +25,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/rh_colaborators', [RhUserController::class, 'index'])->name('rh_colaborators');
     Route::get('/rh_colaborators/add_rh_colaborator', [RhUserController::class, 'add_rh_colaborator'])->name('rh_colaborators.add_rh_colaborator');
     Route::post('/rh_colaborators/create_rh_colaborator', [RhUserController::class, 'create_rh_colaborator'])->name('rh_colaborators.create_rh_colaborator');
+    Route::get('/rh_colaborators/edit_rh_colaborator/{id}', [RhUserController::class, 'edit_rh_colaborator'])->name('rh_colaborators.edit_rh_colaborator');
+    Route::post('/rh_colaborators/alter_rh_colaborator', [RhUserController::class, 'alter_rh_colaborator'])->name('rh_colaborators.alter_rh_colaborator');
 });

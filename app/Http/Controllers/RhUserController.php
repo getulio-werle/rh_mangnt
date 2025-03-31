@@ -9,7 +9,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Validator;
 
 class RhUserController extends Controller
 {
@@ -19,7 +18,7 @@ class RhUserController extends Controller
             return abort(403, 'You are not authorized to access this page');
         }
 
-        $colaborators = User::where('role', 'rh')->get();
+        $colaborators = User::with('details')->where('role', 'rh')->get();  
 
         return view('colaborator.colaborators', compact('colaborators'));
     }
@@ -80,6 +79,43 @@ class RhUserController extends Controller
             'phone' => $request->phone,
             'salary' => $request->salary,
             'admission_date' => $request->admission_date
+        ]);
+
+        return redirect()->route('rh_colaborators');
+    }
+
+    public function edit_rh_colaborator($id) : View | RedirectResponse 
+    {
+        if (!Gate::allows('admin')) {
+            return abort(403, 'You are not authorized to access this page');
+        }
+
+        $id = $this->decrypt($id);
+
+        $colaborator = User::with('details')->findOrFail($id);
+
+        return view('colaborator.edit-rh-colaborator', compact('colaborator'));
+    }
+
+    public function alter_rh_colaborator(Request $request) : View | RedirectResponse
+    {
+        if (!Gate::allows('admin')) {
+            return abort(403, 'You are not authorized to access this page');
+        }
+
+        $request->validate([
+            'id' => 'required',
+            'salary' => 'required|decimal:2',
+            'admission_date' => 'required|date_format:Y-m-d',
+        ]);
+
+        $id = $this->decrypt($request->id);
+
+        $user = User::findOrFail($id);
+
+        $user->details->update([
+            'salary' => $request->salary,
+            'admission_date' => $request->admission_date,
         ]);
 
         return redirect()->route('rh_colaborators');
