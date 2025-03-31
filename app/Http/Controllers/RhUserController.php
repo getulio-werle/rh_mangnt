@@ -43,6 +43,10 @@ class RhUserController extends Controller
 
         $department = $this->decrypt($request->department);
 
+        if ($department != 2) {
+            return redirect()->back();
+        }
+
         $request->merge([
             'department' => $department,
         ]);

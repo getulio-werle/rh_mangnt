@@ -35,7 +35,9 @@
                                     <label for="department" class="form-label">Department</label>
                                     <select name="department" id="department" class="form-select">
                                         @foreach ($departments as $department)
-                                            <option value="{{ Crypt::encrypt($department->id) }}">{{ $department->name }}</option>
+                                            @if ($department->id == 2)
+                                                <option value="{{ Crypt::encrypt($department->id) }}">{{ $department->name }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>

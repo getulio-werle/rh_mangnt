@@ -63,7 +63,7 @@ class DepartmentController extends Controller
             return redirect()->back();
         }
 
-        if (intval($id) == 1) {
+        if ($this->is_department_blocked($id)) {
             return redirect()->route('departments');
         }
 
@@ -91,7 +91,7 @@ class DepartmentController extends Controller
             return redirect()->back();
         }
 
-        if (intval($id) == 1) {
+        if ($this->is_department_blocked($id)) {
             return redirect()->route('departments');
         }
 
@@ -116,7 +116,7 @@ class DepartmentController extends Controller
             return redirect()->back();
         }
 
-        if (intval($id) == 1) {
+        if ($this->is_department_blocked($id)) {
             return redirect()->route('departments');
         }
 
@@ -137,7 +137,7 @@ class DepartmentController extends Controller
             return redirect()->back();
         }
         
-        if (intval($id) == 1) {
+        if ($this->is_department_blocked($id)) {
             return redirect()->route('departments');
         }
 
@@ -156,5 +156,10 @@ class DepartmentController extends Controller
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    private function is_department_blocked($id) 
+    {
+        return in_array(intval($id), [1, 2]);
     }
 }

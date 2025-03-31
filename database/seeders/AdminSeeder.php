@@ -15,11 +15,18 @@ class AdminSeeder extends Seeder
     {
         // admin department
         DB::table('departments')->insert([
-            'name' => 'Administração',
-            'created_at' => now(),
-            'updated_at' => now(),
+            [
+                'name' => 'Administração',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Recursos Humanos',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
         ]);
-        
+
         // admin
         DB::table('users')->insert([
             'department_id' => 1,   // Administração
@@ -45,6 +52,5 @@ class AdminSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
     }
 }
