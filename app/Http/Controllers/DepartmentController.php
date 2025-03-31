@@ -148,11 +148,11 @@ class DepartmentController extends Controller
         return redirect()->route('departments');
     }
 
-    private function decrypt($valor)
+    private function decrypt($value)
     {
         try {
-            $valor = Crypt::decrypt($valor);
-            return $valor;
+            $value = Crypt::decrypt($value);
+            return $value;
         } catch (\Exception $e) {
             return false;
         }
