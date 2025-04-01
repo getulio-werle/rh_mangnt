@@ -4,7 +4,7 @@
 
     <hr>
 
-    <form action="{{ route('department.alter_department') }}" method="post">
+    <form action="{{ route('departments.alter-department') }}" method="post">
 
         @csrf
 

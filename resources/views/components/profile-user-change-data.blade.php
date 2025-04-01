@@ -1,4 +1,4 @@
-<form action="{{ route('user.update_data') }}" method="post">
+<form action="{{ route('user.update-data') }}" method="post">
 
     @csrf
 

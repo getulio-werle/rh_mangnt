@@ -9,7 +9,7 @@
 
             <h4>Colaborator: {{ $colaborator->name }} | {{ $colaborator->email }}</h4>
 
-            <form action="{{ route('rh_colaborators.alter_rh_colaborator') }}" method="post">
+            <form action="{{ route('colaborators.rh.alter-colaborator') }}" method="post">
 
                 @csrf
 
@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <a href="{{ route('rh_colaborators') }}" class="btn btn-outline-danger me-3">Cancel</a>
+                    <a href="{{ route('colaborators.rh') }}" class="btn btn-outline-danger me-3">Cancel</a>
                     <button type="submit" class="btn btn-primary">Alter colaborator</button>
                 </div>
 

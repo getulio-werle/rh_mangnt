@@ -10,11 +10,11 @@
             @if (count($departments) == 0)
                 <div class="text-center my-5">
                     <p>No departments found.</p>
-                    <a href="{{ route('department.add_department') }}" class="btn btn-primary">Create a new department</a>
+                    <a href="{{ route('departments.add-department') }}" class="btn btn-primary">Create a new department</a>
                 </div>
             @else
                 <div class="mb-3">
-                    <a href="{{ route('department.add_department') }}" class="btn btn-primary">Create a new department</a>
+                    <a href="{{ route('departments.add-department') }}" class="btn btn-primary">Create a new department</a>
                 </div>
                 <table class="table" id="table">
                     <thead class="table-dark">
@@ -32,9 +32,9 @@
                                         </div>
                                     @else
                                         <div class="d-flex gap-3 justify-content-end">
-                                            <a href="{{ route('department.edit_department', ['id' => Crypt::encrypt($department->id) ]) }}" class="btn btn-sm btn-outline-dark"><i
+                                            <a href="{{ route('departments.edit-department', ['id' => Crypt::encrypt($department->id) ]) }}" class="btn btn-sm btn-outline-dark"><i
                                                     class="fa-regular fa-pen-to-square me-2"></i>Edit</a>
-                                            <a href="{{ route('department.delete_department', ['id' => Crypt::encrypt($department->id) ]) }}" class="btn btn-sm btn-outline-dark"><i
+                                            <a href="{{ route('departments.delete-department', ['id' => Crypt::encrypt($department->id) ]) }}" class="btn btn-sm btn-outline-dark"><i
                                                     class="fa-regular fa-trash-can me-2"></i>Delete</a>
                                         </div>
                                     @endif

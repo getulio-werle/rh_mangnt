@@ -4,7 +4,7 @@
 
     <hr>
 
-    <form action="{{ route('department.create_department') }}" method="post">
+    <form action="{{ route('departments.create-department') }}" method="post">
 
         @csrf
 

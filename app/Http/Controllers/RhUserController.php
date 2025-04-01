@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Gate;
 
 class RhUserController extends Controller
 {
-    public function index(): View | RedirectResponse
+    public function rhColaborators(): View | RedirectResponse
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -21,10 +21,10 @@ class RhUserController extends Controller
 
         $colaborators = User::with('details')->where('role', 'rh')->get();  
 
-        return view('colaborator.colaborators', compact('colaborators'));
+        return view('colaborators.colaborators', compact('colaborators'));
     }
 
-    public function add_rh_colaborator(): View | RedirectResponse
+    public function addRhColaborator(): View | RedirectResponse
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -32,10 +32,10 @@ class RhUserController extends Controller
 
         $departments = Department::all();
         
-        return view('colaborator.add_rh_colaborator', compact('departments'));
+        return view('colaborators.add-rh-colaborator', compact('departments'));
     }
 
-    public function create_rh_colaborator(Request $request)// : View | RedirectResponse 
+    public function createRhColaborator(Request $request)// : View | RedirectResponse 
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -82,10 +82,10 @@ class RhUserController extends Controller
             'admission_date' => $request->admission_date
         ]);
 
-        return redirect()->route('rh_colaborators');
+        return redirect()->route('colaborators.rh');
     }
 
-    public function edit_rh_colaborator($id) : View | RedirectResponse 
+    public function editRhColaborator($id) : View | RedirectResponse 
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -95,10 +95,10 @@ class RhUserController extends Controller
 
         $colaborator = User::with('details')->findOrFail($id);
 
-        return view('colaborator.edit-rh-colaborator', compact('colaborator'));
+        return view('colaborators.edit-rh-colaborator', compact('colaborator'));
     }
 
-    public function alter_rh_colaborator(Request $request) : View | RedirectResponse
+    public function alterRhColaborator(Request $request) : View | RedirectResponse
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -119,10 +119,10 @@ class RhUserController extends Controller
             'admission_date' => $request->admission_date,
         ]);
 
-        return redirect()->route('rh_colaborators');
+        return redirect()->route('colaborators.rh');
     }
 
-    public function delete_rh_colaborator($id) : View | RedirectResponse 
+    public function deleteRhColaborator($id) : View | RedirectResponse 
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -132,10 +132,10 @@ class RhUserController extends Controller
 
         $colaborator = User::findOrFail($id);
 
-        return view('colaborator.delete-rh-colaborator', compact('colaborator'));
+        return view('colaborators.delete-rh-colaborator', compact('colaborator'));
     }
 
-    public function delete_rh_colaborator_confirm($id) : RedirectResponse 
+    public function deleteRhColaboratorConfirm($id) : RedirectResponse 
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -148,7 +148,7 @@ class RhUserController extends Controller
         $colaborator_details->delete();
         $colaborator->delete();
 
-        return redirect()->route('rh_colaborators');
+        return redirect()->route('colaborators.rh');
     }
 
     private function decrypt($value) : string | bool

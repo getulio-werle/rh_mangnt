@@ -14,7 +14,7 @@ class ProfileController extends Controller
         return view('user.profile');
     }
 
-    public function update_password(Request $request) : RedirectResponse
+    public function updatePassword(Request $request) : RedirectResponse
     {
         $request->validate(
             [
@@ -40,7 +40,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function update_data(Request $request) : RedirectResponse 
+    public function updateData(Request $request) : RedirectResponse 
     {
         $request->validate(
             [

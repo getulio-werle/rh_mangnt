@@ -20,19 +20,19 @@ class DepartmentController extends Controller
 
         $departments = Department::all();
 
-        return view('department.departments', compact('departments'));
+        return view('departments.departments', compact('departments'));
     }
 
-    public function add_department(): View
+    public function addDepartment(): View
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
         }
 
-        return view('department.add-department');
+        return view('departments.add-department');
     }
 
-    public function create_department(Request $request): RedirectResponse
+    public function createDepartment(Request $request): RedirectResponse
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -51,7 +51,7 @@ class DepartmentController extends Controller
         return redirect()->route('departments');
     }
 
-    public function edit_department($id): View | RedirectResponse
+    public function editDepartment($id): View | RedirectResponse
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -69,10 +69,10 @@ class DepartmentController extends Controller
 
         $department = Department::findOrFail($id);
 
-        return view('department.edit-department', compact('department'));
+        return view('departments.edit-department', compact('department'));
     }
 
-    public function alter_department(Request $request): RedirectResponse
+    public function alterDepartment(Request $request): RedirectResponse
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -104,7 +104,7 @@ class DepartmentController extends Controller
         return redirect()->route('departments');
     }
 
-    public function delete_department($id): View | RedirectResponse
+    public function deleteDepartment($id): View | RedirectResponse
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -122,10 +122,10 @@ class DepartmentController extends Controller
 
         $department = Department::findOrFail($id);
 
-        return view('department.delete_department', compact('department'));
+        return view('departments.delete-department', compact('department'));
     }
 
-    public function delete_department_confirm($id): RedirectResponse
+    public function deleteDepartmentConfirm($id): RedirectResponse
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');

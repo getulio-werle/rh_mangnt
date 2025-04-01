@@ -8,11 +8,11 @@
             @if (count($colaborators) == 0)
                 <div class="text-center my-5">
                     <p>No colaborators found.</p>
-                    <a href="{{ route('rh_colaborators.add_rh_colaborator') }}" class="btn btn-primary">Add a new colaborator</a>
+                    <a href="{{ route('colaborators.rh.add-colaborator') }}" class="btn btn-primary">Add a new colaborator</a>
                 </div>
             @else
                 <div class="mb-3">
-                    <a href="{{ route('rh_colaborators.add_rh_colaborator') }}" class="btn btn-primary">Add a new colaborator</a>
+                    <a href="{{ route('colaborators.rh.add-colaborator') }}" class="btn btn-primary">Add a new colaborator</a>
                 </div>
                 <table class="table" id="table">
                     <thead class="table-dark">
@@ -43,9 +43,9 @@
                                 <td>{{ $colaborator->details->city }}</td>
                                 <td>
                                     <div class="d-flex gap-3 justify-content-end">
-                                        <a href="{{ route('rh_colaborators.edit_rh_colaborator', ['id' => Crypt::encrypt($colaborator->id)]) }}" class="btn btn-sm btn-outline-dark"><i
+                                        <a href="{{ route('colaborators.rh.edit-colaborator', ['id' => Crypt::encrypt($colaborator->id)]) }}" class="btn btn-sm btn-outline-dark"><i
                                                 class="fa-regular fa-pen-to-square me-2"></i>Edit</a>
-                                        <a href="{{ route('rh_colaborators.delete_rh_colaborator', ['id' => Crypt::encrypt($colaborator->id)]) }}" class="btn btn-sm btn-outline-dark"><i
+                                        <a href="{{ route('colaborators.rh.delete-colaborator', ['id' => Crypt::encrypt($colaborator->id)]) }}" class="btn btn-sm btn-outline-dark"><i
                                                 class="fa-regular fa-trash-can me-2"></i>Delete</a>
                                     </div>
                                 </td>

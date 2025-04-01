@@ -7,7 +7,7 @@
 
             <hr>
 
-            <form action="{{ route('rh_colaborators.create_rh_colaborator') }}" method="post">
+            <form action="{{ route('colaborators.rh.create-colaborator') }}" method="post">
 
                 @csrf
 
@@ -42,7 +42,7 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <a href="{{ route('department.add_department') }}" class="btn btn-primary"><i
+                                    <a href="{{ route('departments.add-department') }}" class="btn btn-primary"><i
                                             class="fa-solid fa-plus"></i></a>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                 <p class="mb-3">Profile: <strong>Human Resources</strong></p>
 
                 <div class="mb-3">
-                    <a href="{{ route('rh_colaborators') }}" class="btn btn-outline-danger me-3">Cancel</a>
+                    <a href="{{ route('colaborators.rh') }}" class="btn btn-outline-danger me-3">Cancel</a>
                     <button type="submit" class="btn btn-primary">Create colaborator</button>
                 </div>
 

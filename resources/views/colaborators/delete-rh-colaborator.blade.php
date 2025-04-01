@@ -8,8 +8,8 @@
 
     <div>
         <h3 class="my-5">{{ $colaborator->name }} | {{ $colaborator->email }}</h3>
-        <a href="{{ route('rh_colaborators') }}" class="btn btn-secondary px-5">No</a>
-        <a href="{{ route('rh_colaborators.delete_rh_colaborator_confirm', ['id' => Crypt::encrypt($colaborator->id)]) }}"
+        <a href="{{ route('colaborators.rh') }}" class="btn btn-secondary px-5">No</a>
+        <a href="{{ route('colaborators.rh.delete-colaborator-confirm', ['id' => Crypt::encrypt($colaborator->id)]) }}"
             class="btn btn-danger px-5">Yes</a>
     </div>
 
