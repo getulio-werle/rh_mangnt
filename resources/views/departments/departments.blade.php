@@ -18,7 +18,7 @@
                 </div>
                 <table class="table" id="table">
                     <thead class="table-dark">
-                        <th>Departments</th>
+                        <th>Name</th>
                         <th></th>
                     </thead>
                     <tbody>

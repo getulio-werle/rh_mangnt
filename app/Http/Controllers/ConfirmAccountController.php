@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ConfirmAccountController extends Controller
 {
-    public function confirmAccount($token)
+    public function confirmAccount($token) : View | RedirectResponse
     {
         $user = User::where('confirmation_token', $token)->first();
 
@@ -18,7 +20,7 @@ class ConfirmAccountController extends Controller
         return view('auth.account-confirmation', compact('user'));
     }
 
-    public function confirmAccountSubmit(Request $request)
+    public function confirmAccountSubmit(Request $request) : View | RedirectResponse
     {
         $request->validate([
             'token' => 'required',

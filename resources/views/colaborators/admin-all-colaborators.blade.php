@@ -1,14 +1,13 @@
-<x-layout-app page-title="Human Resources Colaborators">
+<x-layout-app page-title="All Colaborators">
 
     <div class="row">
         <div class="col">
 
-            <h3>Human Resources Colaborators</h3>
+            <h3>All Colaborators</h3>
             <hr>
             @if (count($colaborators) == 0)
                 <div class="text-center my-5">
                     <p>No colaborators found.</p>
-                    <a href="{{ route('colaborators.rh.add-colaborator') }}" class="btn btn-primary">Add a new colaborator</a>
                 </div>
             @else
                 <div class="mb-3">
@@ -45,11 +44,11 @@
                                 <td>{{ $colaborator->details->salary }} $</td>
                                 <td>
                                     <div class="d-flex gap-3 justify-content-end">
-                                        <a href="{{ route('colaborators.rh.edit-colaborator', ['id' => Crypt::encrypt($colaborator->id)]) }}" class="btn btn-sm btn-outline-dark"><i
-                                                class="fa-regular fa-pen-to-square me-2"></i>Edit</a>
-                                        <a href="{{ route('colaborators.rh.delete-colaborator', ['id' => Crypt::encrypt($colaborator->id)]) }}" class="btn btn-sm btn-outline-dark"><i
+                                        <a href="#" class="btn btn-sm btn-outline-dark"><i
+                                            class="fas fa-eye me-2"></i>Details</a>
+                                            <a href="#" class="btn btn-sm btn-outline-dark"><i
                                                 class="fa-regular fa-trash-can me-2"></i>Delete</a>
-                                    </div>
+                                        </div>
                                 </td>
                             </tr>
                         @endforeach
