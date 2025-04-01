@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use App\Models\User;
+use App\Models\UserDetail;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -121,7 +122,36 @@ class RhUserController extends Controller
         return redirect()->route('rh_colaborators');
     }
 
-    private function decrypt($value)
+    public function delete_rh_colaborator($id) : View | RedirectResponse 
+    {
+        if (!Gate::allows('admin')) {
+            return abort(403, 'You are not authorized to access this page');
+        }
+
+        $id = $this->decrypt($id);
+
+        $colaborator = User::findOrFail($id);
+
+        return view('colaborator.delete-rh-colaborator', compact('colaborator'));
+    }
+
+    public function delete_rh_colaborator_confirm($id) : RedirectResponse 
+    {
+        if (!Gate::allows('admin')) {
+            return abort(403, 'You are not authorized to access this page');
+        }
+
+        $id = $this->decrypt($id);
+
+        $colaborator = User::findOrFail($id);
+        $colaborator_details = UserDetail::where('user_id', $id);
+        $colaborator_details->delete();
+        $colaborator->delete();
+
+        return redirect()->route('rh_colaborators');
+    }
+
+    private function decrypt($value) : string | bool
     {
         try {
             $value = Crypt::decrypt($value);

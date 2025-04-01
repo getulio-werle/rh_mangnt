@@ -7,6 +7,8 @@
 
             <hr>
 
+            <h4>Colaborator: {{ $colaborator->name }} | {{ $colaborator->email }}</h4>
+
             <form action="{{ route('rh_colaborators.alter_rh_colaborator') }}" method="post">
 
                 @csrf
