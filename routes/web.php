@@ -38,4 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/colaborators/rh/delete-colaborator-confirm/{id}', [RhUserController::class, 'deleteRhColaboratorConfirm'])->name('colaborators.rh.delete-colaborator-confirm');
     // colaborators
     Route::get('/colaborators', [ColaboratorsController::class, 'colaborators'])->name('colaborators');
+    Route::get('/colaborators/colaborator-details/{id}', [ColaboratorsController::class, 'colaboratorDetails'])->name('colaborators.colaborator-details');
+    Route::get('/colaborators/delete-colaborator/{id}', [ColaboratorsController::class, 'deleteColaborator'])->name('colaborators.delete-colaborator');
+    Route::get('/colaborators/delete-colaborator-confirm', [ColaboratorsController::class, 'deleteColaboratorConfirm'])->name('colaborators.delete-colaborator-confirm');
 });

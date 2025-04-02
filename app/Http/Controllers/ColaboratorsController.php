@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Gate;
 
 class ColaboratorsController extends Controller
 {
-    public function colaborators()
+    public function colaborators() : View | RedirectResponse
     {
-        if (!Gate::allows('admin')) {
+        if (!Gate::allows('admin', 'rh')) {
             return abort(403, 'You are not authorized to access this page');
         }
 
@@ -19,5 +23,79 @@ class ColaboratorsController extends Controller
                         ->get();
 
         return view('colaborators.admin-all-colaborators')->with('colaborators', $colaborators);
+    }
+
+    public function colaboratorDetails($id) : View | RedirectResponse
+    {
+        if (!Gate::allows('admin', 'rh')) {
+            return abort(403, 'You are not authorized to access this page');
+        }
+
+        $id = $this->decrypt($id);
+
+        if (!$id) {
+            return redirect()->back();
+        }
+
+        if (Auth::user()->id == $id) {
+            return redirect()->route('home');
+        }
+
+        $colaborator = User::findOrFail($id);
+
+        return view('colaborators.colaborator-details')->with('colaborator', $colaborator);
+    }
+
+    public function deleteColaborator($id) : View | RedirectResponse
+    {
+        if (!Gate::allows('admin', 'rh')) {
+            return abort(403, 'You are not authorized to access this page');
+        }
+
+        $id = $this->decrypt($id);
+
+        if (!$id) {
+            return redirect()->back();
+        }
+
+        if (Auth::user()->id == $id) {
+            return redirect()->route('home');
+        }
+
+        $colaborator = User::findOrFail($id);
+
+        return view('colaborators.delete-colaborator-confirm')->with('colaborator', $colaborator);
+    }
+
+    public function deleteColaboratorConfirm($id) : RedirectResponse
+    {
+        if (!Gate::allows('admin', 'rh')) {
+            return abort(403, 'You are not authorized to access this page');
+        }
+
+        $id = $this->decrypt($id);
+
+        if (!$id) {
+            return redirect()->back();
+        }
+
+        if (Auth::user()->id == $id) {
+            return redirect()->route('home');
+        }
+
+        $colaborator = User::findOrFail($id);
+        $colaborator->delete();
+
+        return redirect()->route('colaborators');
+    }
+
+    private function decrypt($value) : string | bool
+    {
+        try {
+            $value = Crypt::decrypt($value);
+            return $value;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }
