@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class DepartmentController extends Controller
 {
-    public function departments(): View
+    public function departments() : View
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -23,7 +23,7 @@ class DepartmentController extends Controller
         return view('departments.departments', compact('departments'));
     }
 
-    public function addDepartment(): View
+    public function addDepartment() : View
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -32,7 +32,7 @@ class DepartmentController extends Controller
         return view('departments.add-department');
     }
 
-    public function createDepartment(Request $request): RedirectResponse
+    public function createDepartment(Request $request) : RedirectResponse
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -51,7 +51,7 @@ class DepartmentController extends Controller
         return redirect()->route('departments');
     }
 
-    public function editDepartment($id): View | RedirectResponse
+    public function editDepartment($id) : View | RedirectResponse
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -72,7 +72,7 @@ class DepartmentController extends Controller
         return view('departments.edit-department', compact('department'));
     }
 
-    public function alterDepartment(Request $request): RedirectResponse
+    public function alterDepartment(Request $request) : RedirectResponse
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -104,7 +104,7 @@ class DepartmentController extends Controller
         return redirect()->route('departments');
     }
 
-    public function deleteDepartment($id): View | RedirectResponse
+    public function deleteDepartment($id) : View | RedirectResponse
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -125,7 +125,7 @@ class DepartmentController extends Controller
         return view('departments.delete-department', compact('department'));
     }
 
-    public function deleteDepartmentConfirm($id): RedirectResponse
+    public function deleteDepartmentConfirm($id) : RedirectResponse
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -148,7 +148,7 @@ class DepartmentController extends Controller
         return redirect()->route('departments');
     }
 
-    private function decrypt($value)
+    private function decrypt($value) : string | bool
     {
         try {
             $value = Crypt::decrypt($value);
@@ -158,7 +158,7 @@ class DepartmentController extends Controller
         }
     }
 
-    private function is_department_blocked($id) 
+    private function is_department_blocked($id) : bool
     {
         return in_array(intval($id), [1, 2]);
     }

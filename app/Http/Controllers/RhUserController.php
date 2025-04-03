@@ -6,6 +6,7 @@ use App\Mail\ConfirmAccountEmail;
 use App\Models\Department;
 use App\Models\User;
 use App\Models\UserDetail;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -22,7 +23,12 @@ class RhUserController extends Controller
             return abort(403, 'You are not authorized to access this page');
         }
 
-        $colaborators = User::with('details')->where('role', 'rh')->get();  
+        $colaborators = User::withTrashed()
+                        ->with(['details' => function (Builder $query) {
+                            $query->withTrashed();
+                        }])
+                        ->where('role', 'rh')
+                        ->get();
 
         return view('colaborators.colaborators', compact('colaborators'));
     }
@@ -38,7 +44,7 @@ class RhUserController extends Controller
         return view('colaborators.add-rh-colaborator', compact('departments'));
     }
 
-    public function createRhColaborator(Request $request)// : View | RedirectResponse 
+    public function createRhColaborator(Request $request) : View | RedirectResponse 
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
@@ -156,6 +162,23 @@ class RhUserController extends Controller
         $colaborator_details = UserDetail::where('user_id', $id);
         $colaborator_details->delete();
         $colaborator->delete();
+
+        return redirect()->route('colaborators.rh');
+    }
+
+    public function restoreRhColaborator($id) : RedirectResponse
+    {
+        if (!Gate::allows('admin')) {
+            return abort(403, 'You are not authorized to access this page');
+        }
+
+        $id = $this->decrypt($id);
+
+        $colaborator = User::withTrashed()->findOrFail($id);
+        $colaborator_details = UserDetail::withTrashed()->where('user_id', $id);
+
+        $colaborator->restore();
+        $colaborator_details->restore();
 
         return redirect()->route('colaborators.rh');
     }

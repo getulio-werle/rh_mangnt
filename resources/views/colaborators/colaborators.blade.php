@@ -29,7 +29,7 @@
                     </thead>
                     <tbody>
                         @foreach ($colaborators as $colaborator)
-                            <tr>
+                            <tr class="{{ $colaborator->deleted_at != null ? 'table-danger' : '' }}">
                                 <td>{{ $colaborator->name }}</td>
                                 <td>{{ $colaborator->email }}</td>
                                 <td>
@@ -45,10 +45,15 @@
                                 <td>{{ $colaborator->details->salary }} $</td>
                                 <td>
                                     <div class="d-flex gap-3 justify-content-end">
-                                        <a href="{{ route('colaborators.rh.edit-colaborator', ['id' => Crypt::encrypt($colaborator->id)]) }}" class="btn btn-sm btn-outline-dark"><i
-                                                class="fa-regular fa-pen-to-square me-2"></i>Edit</a>
-                                        <a href="{{ route('colaborators.rh.delete-colaborator', ['id' => Crypt::encrypt($colaborator->id)]) }}" class="btn btn-sm btn-outline-dark"><i
-                                                class="fa-regular fa-trash-can me-2"></i>Delete</a>
+                                        @empty($colaborator->deleted_at)
+                                            <a href="{{ route('colaborators.rh.edit-colaborator', ['id' => Crypt::encrypt($colaborator->id)]) }}" class="btn btn-sm btn-outline-dark"><i
+                                                    class="fa-regular fa-pen-to-square me-2"></i>Edit</a>
+                                            <a href="{{ route('colaborators.rh.delete-colaborator', ['id' => Crypt::encrypt($colaborator->id)]) }}" class="btn btn-sm btn-outline-dark"><i
+                                                    class="fa-regular fa-trash-can me-2"></i>Delete</a>
+                                        @else
+                                            <a href="{{ route('colaborators.rh.restore-colaborator', ['id' => Crypt::encrypt($colaborator->id)]) }}" class="btn btn-sm btn-outline-dark"><i
+                                                class="fa-solid fa-trash-arrow-up me-2"></i>Restore</a>
+                                        @endempty
                                     </div>
                                 </td>
                             </tr>
