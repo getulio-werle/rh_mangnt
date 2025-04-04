@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/profile', [ProfileController::class, 'profile'])->name('user.profile');
     Route::post('/user/profile/update-password', [ProfileController::class, 'updatePassword'])->name('user.update-password');
     Route::post('/user/profile/update-data', [ProfileController::class, 'updateData'])->name('user.update-data');
+    Route::post('/user/profile/update-address', [ProfileController::class, 'updateAddress'])->name('user.update-address');
     // departments
     Route::get('/departments', [DepartmentController::class, 'getDepartments'])->name('departments');
     Route::get('/departments/add-department', [DepartmentController::class, 'addDepartment'])->name('departments.add-department');

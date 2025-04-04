@@ -1,8 +1,8 @@
+<h2 class="mb-3">Change password</h2>
+
 <form action="{{ route('user.update-password') }}" method="post">
 
     @csrf
-
-    <h2 class="mb-3">Change password</h2>
 
     <div class="mb-3">
         <label for="current_password" class="form-label">Current password</label>

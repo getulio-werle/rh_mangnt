@@ -13,7 +13,7 @@
     <!-- user -->
     <div class="d-flex align-items-center">
         <i class="fas fa-user-circle me-3"></i>
-        <a href="#" class="text-light text-decoration-none me-3">
+        <a href="{{ route('user.profile') }}" class="text-light text-decoration-none me-3">
             {{ auth()->user()->name }}
         </a>
 
