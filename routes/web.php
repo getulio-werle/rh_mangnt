@@ -47,5 +47,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/colaborators/delete-colaborator-confirm/{id}', [ColaboratorController::class, 'deleteColaboratorConfirm'])->name('colaborators.delete-colaborator-confirm');
     Route::get('/colaborators/restore-colaborator/{id}', [ColaboratorController::class, 'restoreColaborator'])->name('colaborators.restore-colaborator');
     // all colaborators (admin only)
-    Route::get('/colaborators/all', [ColaboratorController::class, 'getAllColaborators'])->name('all-colaborators');
+    Route::get('/colaborators/all', [ColaboratorController::class, 'getAllColaborators'])->name('colaborators.all');
 });

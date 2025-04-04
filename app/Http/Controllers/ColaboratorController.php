@@ -24,7 +24,7 @@ class ColaboratorController extends Controller
 
     public function getAllColaborators() : View | RedirectResponse // get all colaborators, except admin user
     {
-        if (!Gate::any(['admin'])) {
+        if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
         }
 
@@ -32,7 +32,7 @@ class ColaboratorController extends Controller
                         ->with(['details' => function (Builder $query) {
                             $query->withTrashed();
                         }])
-                        ->where('role', '!=', 'admin')
+                        ->where('id', '!=', Auth::user()->id)
                         ->get();
 
         return view('colaborators.general-colaborators')->with('colaborators', $colaborators);
@@ -40,7 +40,7 @@ class ColaboratorController extends Controller
 
     public function getColaborators() : View | RedirectResponse // get colaborators, except admin and rh users
     {
-        if (!Gate::any(['admin', 'rh'])) {
+        if (!Gate::allows('rh')) {
             return abort(403, 'You are not authorized to access this page');
         }
 
@@ -68,10 +68,15 @@ class ColaboratorController extends Controller
         }
 
         if (Auth::user()->id == $id) {
-            return redirect()->route('home');
+            return redirect()->back();
         }
 
-        $colaborator = User::findOrFail($id);
+        $colaborator = User::where('role', '!=', 'admin')
+                            ->findOrFail($id);
+
+        if (Auth::user()->role == 'rh' && $colaborator->role == 'rh') {
+            return abort(403, 'You are not authorized to access this page');
+        }
 
         return view('colaborators.colaborator-details')->with('colaborator', $colaborator);
     }
@@ -151,7 +156,10 @@ class ColaboratorController extends Controller
 
         $id = $this->decrypt($id);
 
-        $colaborator = User::with('details')->findOrFail($id);
+        $colaborator = User::with('details')
+                        ->where('role', '!=', 'admin')
+                        ->where('role', '!=', 'rh')
+                        ->findOrFail($id);
 
         return view('colaborators.edit-colaborator', compact('colaborator'));
     }
@@ -170,7 +178,9 @@ class ColaboratorController extends Controller
 
         $id = $this->decrypt($request->id);
 
-        $user = User::findOrFail($id);
+        $user = User::where('role', '!=', 'admin')
+                    ->where('role', '!=', 'rh')
+                    ->findOrFail($id);
 
         $user->details->update([
             'salary' => $request->salary,
@@ -193,10 +203,15 @@ class ColaboratorController extends Controller
         }
 
         if (Auth::user()->id == $id) {
-            return redirect()->route('home');
+            return redirect()->back();
         }
-
-        $colaborator = User::findOrFail($id);
+        
+        $colaborator = User::where('id', '>', 1)
+                            ->findOrFail($id);
+        
+        if (Auth::user()->role == 'rh' && $colaborator->role == 'rh') {
+            return redirect()->back();
+        }
 
         return view('colaborators.delete-colaborator-confirm')->with('colaborator', $colaborator);
     }
@@ -214,11 +229,17 @@ class ColaboratorController extends Controller
         }
 
         if (Auth::user()->id == $id) {
-            return redirect()->route('home');
+            return redirect()->back();
+        }
+        
+        $colaborator = User::where('id', '>', 1)
+                            ->findOrFail($id);
+        $colaborator_details = UserDetail::where('user_id', $id)->first();
+        
+        if (Auth::user()->role == 'rh' && $colaborator->role == 'rh') {
+            return redirect()->back();
         }
 
-        $colaborator = User::findOrFail($id);
-        $colaborator_details = UserDetail::where('user_id', $id);
         $colaborator_details->delete();
         $colaborator->delete();
 
@@ -341,6 +362,10 @@ class ColaboratorController extends Controller
 
         $id = $this->decrypt($id);
 
+        if (Auth::user()->id == $id) {
+            return redirect()->back();
+        }
+
         $colaborator = User::with('details')->findOrFail($id);
 
         return view('colaborators.edit-rh-colaborator', compact('colaborator'));
@@ -360,6 +385,10 @@ class ColaboratorController extends Controller
 
         $id = $this->decrypt($request->id);
 
+        if (Auth::user()->id == $id) {
+            return redirect()->back();
+        }
+
         $user = User::findOrFail($id);
 
         $user->details->update([
@@ -378,6 +407,10 @@ class ColaboratorController extends Controller
 
         $id = $this->decrypt($id);
 
+        if (Auth::user()->id == $id) {
+            return redirect()->back();
+        }
+
         $colaborator = User::findOrFail($id);
 
         return view('colaborators.delete-colaborator-confirm', compact('colaborator'));
@@ -390,6 +423,10 @@ class ColaboratorController extends Controller
         }
 
         $id = $this->decrypt($id);
+
+        if (Auth::user()->id == $id) {
+            return redirect()->back();
+        }
 
         $colaborator = User::findOrFail($id);
         $colaborator_details = UserDetail::where('user_id', $id);
