@@ -22,7 +22,7 @@ class ColaboratorController extends Controller
     // General colaborators
     // --------------------------------------------------------------
 
-    public function getAllColaborators() : View | RedirectResponse
+    public function getAllColaborators() : View | RedirectResponse // get all colaborators, except admin user
     {
         if (!Gate::any(['admin'])) {
             return abort(403, 'You are not authorized to access this page');
@@ -38,7 +38,7 @@ class ColaboratorController extends Controller
         return view('colaborators.general-colaborators')->with('colaborators', $colaborators);
     }
 
-    public function getColaborators() : View | RedirectResponse
+    public function getColaborators() : View | RedirectResponse // get colaborators, except admin and rh users
     {
         if (!Gate::any(['admin', 'rh'])) {
             return abort(403, 'You are not authorized to access this page');
@@ -82,7 +82,7 @@ class ColaboratorController extends Controller
             return abort(403, 'You are not authorized to access this page');
         }
 
-        $departments = Department::all();
+        $departments = Department::where('id', '>', '2')->get();
         
         return view('colaborators.add-colaborator', compact('departments'));
     }
@@ -139,6 +139,43 @@ class ColaboratorController extends Controller
 
         // send email to user
         Mail::to($user->email)->send(new ConfirmAccountEmail(route('confirm-account', $token)));
+
+        return redirect()->route('colaborators');
+    }
+
+    public function editColaborator($id) : View | RedirectResponse 
+    {
+        if (!Gate::allows('rh')) {
+            return abort(403, 'You are not authorized to access this page');
+        }
+
+        $id = $this->decrypt($id);
+
+        $colaborator = User::with('details')->findOrFail($id);
+
+        return view('colaborators.edit-colaborator', compact('colaborator'));
+    }
+
+    public function alterColaborator(Request $request) : View | RedirectResponse
+    {
+        if (!Gate::allows('rh')) {
+            return abort(403, 'You are not authorized to access this page');
+        }
+
+        $request->validate([
+            'id' => 'required',
+            'salary' => 'required|decimal:2',
+            'admission_date' => 'required|date_format:Y-m-d',
+        ]);
+
+        $id = $this->decrypt($request->id);
+
+        $user = User::findOrFail($id);
+
+        $user->details->update([
+            'salary' => $request->salary,
+            'admission_date' => $request->admission_date,
+        ]);
 
         return redirect()->route('colaborators');
     }

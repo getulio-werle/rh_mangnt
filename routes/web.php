@@ -41,9 +41,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/colaborators/colaborator-details/{id}', [ColaboratorController::class, 'colaboratorDetails'])->name('colaborators.colaborator-details');
     Route::get('/colaborators/add-colaborator', [ColaboratorController::class, 'addColaborator'])->name('colaborators.add-colaborator');
     Route::post('/colaborators/create-colaborator', [ColaboratorController::class, 'createColaborator'])->name('colaborators.create-colaborator');
+    Route::get('/colaborators/edit-colaborator/{id}', [ColaboratorController::class, 'editColaborator'])->name('colaborators.edit-colaborator');
+    Route::post('/colaborators/alter-colaborator', [ColaboratorController::class, 'alterColaborator'])->name('colaborators.alter-colaborator');
     Route::get('/colaborators/delete-colaborator/{id}', [ColaboratorController::class, 'deleteColaborator'])->name('colaborators.delete-colaborator');
     Route::get('/colaborators/delete-colaborator-confirm/{id}', [ColaboratorController::class, 'deleteColaboratorConfirm'])->name('colaborators.delete-colaborator-confirm');
     Route::get('/colaborators/restore-colaborator/{id}', [ColaboratorController::class, 'restoreColaborator'])->name('colaborators.restore-colaborator');
-    // all
+    // all colaborators (admin only)
     Route::get('/colaborators/all', [ColaboratorController::class, 'getAllColaborators'])->name('all-colaborators');
 });
