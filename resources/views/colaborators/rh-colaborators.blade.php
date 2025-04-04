@@ -2,7 +2,6 @@
 
     <div class="row">
         <div class="col">
-
             <h3>Human Resources Colaborators</h3>
             <hr>
             @if (count($colaborators) == 0)
@@ -61,7 +60,6 @@
                     </tbody>
                 </table>
             @endif
-
         </div>
     </div>
 

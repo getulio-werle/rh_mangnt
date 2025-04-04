@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class DepartmentController extends Controller
 {
-    public function departments() : View
+    public function getDepartments() : View
     {
         if (!Gate::allows('admin')) {
             return abort(403, 'You are not authorized to access this page');
