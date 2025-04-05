@@ -7,12 +7,16 @@
             @if (count($colaborators) == 0)
                 <div class="text-center my-5">
                     <p>No colaborators found.</p>
-                    <a href="{{ route('colaborators.add-colaborator') }}" class="btn btn-primary">Add a new colaborator</a>
+                    @can('rh')
+                        <a href="{{ route('colaborators.add-colaborator') }}" class="btn btn-primary">Add a new colaborator</a>
+                    @endcan
                 </div>
             @else
+            @can('rh')
                 <div class="mb-3">
                     <a href="{{ route('colaborators.add-colaborator') }}" class="btn btn-primary">Add a new colaborator</a>
                 </div>
+            @endcan
                 <table class="table" id="table">
                     <thead class="table-dark">
                         <tr>

@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ColaboratorController;
 use App\Http\Controllers\ConfirmAccountController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -14,7 +16,13 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     // home
     Route::redirect('/', 'home');
-    Route::view('/home', 'home')->name('home');
+    Route::get('/home', function () {
+        if (Auth::user()->role == 'admin') {
+            return redirect()->route('admin.home');
+        } else {
+            return view('home');
+        }
+    })->name('home');
     // profile
     Route::get('/user/profile', [ProfileController::class, 'profile'])->name('user.profile');
     Route::post('/user/profile/update-password', [ProfileController::class, 'updatePassword'])->name('user.update-password');
@@ -49,4 +57,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/colaborators/restore-colaborator/{id}', [ColaboratorController::class, 'restoreColaborator'])->name('colaborators.restore-colaborator');
     // all colaborators (admin only)
     Route::get('/colaborators/all', [ColaboratorController::class, 'getAllColaborators'])->name('colaborators.all');
+    // admin home
+    Route::get('/admin/home', [AdminController::class, 'home'])->name('admin.home');
 });
