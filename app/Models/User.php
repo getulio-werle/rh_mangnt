@@ -13,6 +13,9 @@ class User extends Authenticable
     use Notifiable;
     use SoftDeletes;
 
+    protected $fillable = ['department_id'];
+        
+
     // user details
     public function details(): HasOne
     {
